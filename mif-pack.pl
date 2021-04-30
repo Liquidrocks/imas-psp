@@ -52,7 +52,7 @@ my @new_rects;
 die "$resfile.png - Not found"
 	unless -f "$resfile.png";
 
-`convert $resfile.png $resfile.bmp`;
+`magick $resfile.png $resfile.bmp`;
 die unless -f "$resfile.bmp";
 
 open my $bmp,"$resfile.bmp" or die "$resfile.bmp - $!";
