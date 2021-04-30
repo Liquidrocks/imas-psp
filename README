@@ -82,5 +82,5 @@ This will create picture 57848.mif.png with lots of rectangles that are visual r
 
 $ perl mif-pack.pl 57848
 
-(see http://www.tsukuru.info/tlwiki/index.php?title=Idolmaster_SP:Pictures for some samples of modified .mifs)
+(see http://web.archive.org/web/20150224034658/http://tlwiki.org/index.php?title=Idolmaster_SP:Pictures for some samples of modified .mifs)
 
