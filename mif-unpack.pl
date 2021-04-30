@@ -105,7 +105,7 @@ for(sort{$rects[$a]->[2]*$rects[$a]->[3] <=> $rects[$b]->[2]*$rects[$b]->[3]} 0.
 
 	my $sp=$startpoints[$_%@startpoints];
 	my $colorv=$sp->[0]-(int($_/@startpoints)<<$sp->[1]);
-	my $testp=0xa0;
+	
 	bmp_rect $bmp,$colorv|0xa0<<24,$x1,$y1,$x2,$y2;
 
 	bmp_hline $bmp,$colorv|255<<24,$x1,$x1+$len,$y1;
