@@ -7,7 +7,7 @@ use lib $home;
 
 BEGIN{ require "utils.pl" }
 BEGIN{ require "mif-common.pl" }
-our(@startpoints);
+our (@startpoints);
 
 $|++;
 
@@ -105,47 +105,23 @@ for(sort{$rects[$a]->[2]*$rects[$a]->[3] <=> $rects[$b]->[2]*$rects[$b]->[3]} 0.
 
 	my $sp=$startpoints[$_%@startpoints];
 	my $colorv=$sp->[0]-(int($_/@startpoints)<<$sp->[1]);
-	
-	bmp_rect $bmp,$colorv|(0xa0<<24),$x1,$y1,$x2,$y2;
-	
-	bmp_hline $bmp,$colorv,$x1,$x1+$len,$y1;
-	bmp_vline $bmp,$colorv,$x1,$y1,$y1+$len;
+	my $testp=0xa0;
+	bmp_rect $bmp,$colorv|0xa0<<24,$x1,$y1,$x2,$y2;
 
-	bmp_hline $bmp,$colorv,$x2-$len,$x2,$y1;
-	bmp_vline $bmp,$colorv,$x2,$y1,$y1+$len;
+	bmp_hline $bmp,$colorv|255<<24,$x1,$x1+$len,$y1;
+	bmp_vline $bmp,$colorv|255<<24,$x1,$y1,$y1+$len;
 
-	bmp_hline $bmp,$colorv,$x1,$x1+$len,$y2;
-	bmp_vline $bmp,$colorv,$x1,$y2-$len,$y2;
+	bmp_hline $bmp,$colorv|255<<24,$x2-$len,$x2,$y1;
+	bmp_vline $bmp,$colorv|255<<24,$x2,$y1,$y1+$len;
 
-	bmp_hline $bmp,$colorv,$x2-$len,$x2,$y2;
-	bmp_vline $bmp,$colorv,$x2,$y2-$len,$y2;
+	bmp_hline $bmp,$colorv|255<<24,$x1,$x1+$len,$y2;
+	bmp_vline $bmp,$colorv|255<<24,$x1,$y2-$len,$y2;
+
+	bmp_hline $bmp,$colorv|255<<24,$x2-$len,$x2,$y2;
+	bmp_vline $bmp,$colorv|255<<24,$x2,$y2-$len,$y2;
 }
 
 close $bmp;
 
-`convert $resfile.bmp $resfile.png`;
+`magick convert $resfile.bmp  -transparent black $resfile.png`;
 unlink "$resfile.bmp" if -e "$resfile.png";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
