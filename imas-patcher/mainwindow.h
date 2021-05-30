@@ -1,9 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QtGui/QMainWindow>
+#include <QtWidgets/QMainWindow>
 #include <QtGui>
+#include <QtConcurrent>
+#include <QErrorMessage>
 #include "patcher.h"
+
 
 namespace Ui
 {

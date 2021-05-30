@@ -37,7 +37,7 @@ QByteArray MifFile::spit(){
 	QByteArray res;
 	QByteArray dd;
 
-	dd=QString("MIF%1\n").arg(nodes.count(),5).toAscii();
+	dd=QString("MIF%1\n").arg(nodes.count(),5).toLatin1();
 	res+=dd;
 
 	for(int i=0;i<nodes.count();i++){
@@ -46,7 +46,7 @@ QByteArray MifFile::spit(){
 		dd=QString("{%1,%2,%3,%4,%5,%6},\n")
 			 .arg(node->x,4).arg(node->y,4).arg(node->w,4)
 			 .arg(node->h,4).arg(node->a,4).arg(node->b,4)
-			 .toAscii();
+			 .toLatin1();
 		res+=dd;
 	}
 
@@ -67,7 +67,7 @@ static bool mifSortBySize(const MifFileNode *a,const MifFileNode *b){
 
 MifConversionResult MifFile::read(QImage picture){
 	QList<MifFileNode *> remap=nodes;
-	qSort(remap.begin(),remap.end(),mifSortBySize);
+	std::sort(remap.begin(),remap.end(),mifSortBySize);
 	QHash<quint64,MifFileNode *> map,aliases;
 	int i;
 
