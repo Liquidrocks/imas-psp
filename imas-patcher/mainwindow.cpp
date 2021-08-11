@@ -1,5 +1,4 @@
-#include <QtGui>
-
+#include <QtWidgets>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "ui_report.h"
@@ -301,15 +300,15 @@ void YumMailJob::process(){try{
 	while(!(line=file->readline()).isNull()){
 		QChar c;
 		line=chomp(line);
-
 		QByteArray arr;
 		if(record.indexIn(line)!=-1){
 			records.append(bytes.count());
-			arr=line.toAscii();
+			arr=line.toLatin1();
 		} else{
 			QString errstr;
-			arr=text_encode_control_length(line,26,&errstr);
-			if(!errstr.isEmpty()){
+			if(index<57934) arr=text_encode_control_length(line,60,&errstr);
+			else			arr=text_encode_control_length(line,26,&errstr);
+			if (!errstr.isEmpty()&&index!=57909) {
 				state=JOB_STATE_WARNINGS;
 				output+=QString("line %1: could not encode text: %2")
 					.arg(file->line())
@@ -324,11 +323,11 @@ void YumMailJob::process(){try{
 	TASSUME(records.count()==count,QString("Not enough ## entries in file. Need %1 have %2").arg(records.count()).arg(count));
 
 	QString head=QString("//VERSION=1\n//RECORD_NUM=%1\n").arg(count);
-	QByteArray records_data=head.toAscii();
+	QByteArray records_data=head.toLatin1();
 
 	for(int i=0;i<count;i++){
 		QString s=QString("//RECORD_POS=%1\n").arg(records.at(i));
-		QByteArray a=s.toAscii();
+		QByteArray a=s.toLatin1();
 		records_data.append(a);
 	}
 
@@ -362,10 +361,9 @@ void YumPomJob::process(){try{
 	PomFile pom(y.torw());
 	TASSUME(pom.issue.isEmpty(),QString("File %1 inside yum archive - %2").arg(number).arg(pom.issue));
 
-	QString picname=QString("%1-%2(%3)")
+	QString picname=QString("%1-%2")
 					.arg(number)
-					.arg(subnumber)
-					.arg(qrand());
+					.arg(subnumber);
 
 #ifdef SHOW_ORIGINAL_FILE
 	ResourceData *resource=new ResourceData();

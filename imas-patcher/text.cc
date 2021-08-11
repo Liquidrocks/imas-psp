@@ -141,18 +141,30 @@ QByteArray text_encode_control_length(QString source,int length,QString *issue){
 	while(!list.isEmpty()){
 		QString s;
 		QByteArray bytes;
-
+		QRegExp rx("^[a-zA-Z0-9]");
 		while(!list.isEmpty()){
 			s.append(list.at(0));
+			if (s.contains('&')) {
+				if (bytes.isEmpty() == false) {
+					res.append(bytes);
+					if (bytes.size()%2==0)	res.append(" ");
+				}
+				res.append(list.at(0));
+				s="";
+				bytes="";
+			}
+			else {
+				QByteArray bb=text_encode_control(s,issue);
+				if(issue && !issue->isEmpty()) return QByteArray();
 
-			QByteArray bb=text_encode_control(s,issue);
-			if(issue && !issue->isEmpty()) return QByteArray();
+				if(bb.length()>length && !bytes.isEmpty()) break;
+				bytes=bb;
+			}
+				list.removeFirst();
 
-			if(bb.length()>length && !bytes.isEmpty()) break;
-			bytes=bb;
-			list.removeFirst();
-
-			s.append(" ");
+				if (list.size()>0 && ((list.at(0).indexOf(rx) == 0||list.at(0).startsWith('"')))) {
+					s.append(" ");
+				}
 		}
 
 
