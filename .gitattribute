@@ -1,2 +1,7 @@
-*.cpp linguist-language=cpp
-*.pl linguist-language=Perl
+* linguist-vendored
+*.c linguist-vendored=false
+*.cc linguist-vendored=false
+*.cpp linguist-vendored=false
+*.h linguist-vendored=false
+*.pl linguist-vendored=false
+*.ui linguist-vendored=false
